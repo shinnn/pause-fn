@@ -3,10 +3,9 @@
 var inspect = require('util').inspect;
 
 var appendType = require('append-type');
-var ES6Set = require('es6-set');
 
 var PAUSE_ERROR = 'Expected a <Function> returned by `pauseFn()`';
-var resumed = new ES6Set();
+var resumed = new WeakSet();
 
 module.exports = function pauseFn(fn) {
 	if (typeof fn !== 'function') {
