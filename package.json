@@ -1,0 +1,52 @@
+{
+	"name": "pause-fn",
+	"version": "0.1.0",
+	"description": "Pause/resume execution of a function",
+	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
+	"repository": "shinnn/pause-fn",
+	"license": "ISC",
+	"scripts": {
+		"pretest": "eslint .",
+		"test": "nyc node test.js"
+	},
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"function",
+		"pause",
+		"resume",
+		"stop",
+		"buffer",
+		"operation",
+		"execution",
+		"control",
+		"on",
+		"off",
+		"switching"
+	],
+	"dependencies": {
+		"append-type": "^1.0.2",
+		"es6-set": "^0.1.5"
+	},
+	"devDependencies": {
+		"@shinnn/eslint-config": "^6.8.9",
+		"eslint": "^5.12.1",
+		"nyc": "^13.1.0",
+		"nyc-config-common": "^1.0.1",
+		"tape": "^4.9.2"
+	},
+	"eslintConfig": {
+		"extends": "@shinnn",
+		"rules": {
+			"no-var": "off",
+			"prefer-arrow-callback": "off",
+			"prefer-rest-params": "off",
+			"prefer-spread": "off",
+			"prefer-template": "off"
+		}
+	},
+	"nyc": {
+		"extends": "nyc-config-common"
+	}
+}

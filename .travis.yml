@@ -1,0 +1,6 @@
+if: branch !~ ^v\d
+dist: xenial
+language: node_js
+node_js: node
+cache: npm
+after_success: node_modules/.bin/nyc report > coverage.lcov && bash <(curl -s https://codecov.io/bash) -X gcov
