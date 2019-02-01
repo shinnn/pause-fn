@@ -38,11 +38,8 @@
 	"eslintConfig": {
 		"extends": "@shinnn",
 		"rules": {
-			"no-var": "off",
-			"prefer-arrow-callback": "off",
 			"prefer-rest-params": "off",
-			"prefer-spread": "off",
-			"prefer-template": "off"
+			"prefer-spread": "off"
 		}
 	},
 	"nyc": {

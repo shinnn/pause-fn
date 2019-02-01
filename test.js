@@ -77,7 +77,7 @@ test('pauseFn.resume()', async t => {
 	t.throws(
 		() => pauseFn.resume(t.fail),
 		/TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got .* which is not returned by `pauseFn\(\)`\./u,
-		'should throw an error when it takes a function that hasn\'t been resumed.'
+		'should throw an error when it takes a function that hasn\'t been paused.'
 	);
 
 	t.throws(
