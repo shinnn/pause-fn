@@ -1,6 +1,6 @@
 {
 	"name": "pause-fn",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Pause/resume execution of a function",
 	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
 	"repository": "shinnn/pause-fn",
@@ -30,7 +30,7 @@
 	},
 	"devDependencies": {
 		"@shinnn/eslint-config": "^6.8.9",
-		"eslint": "^5.12.1",
+		"eslint": "^5.13.0",
 		"nyc": "^13.1.0",
 		"nyc-config-common": "^1.0.1",
 		"tape": "^4.9.2"
