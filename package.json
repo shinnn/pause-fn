@@ -26,7 +26,7 @@
 		"switching"
 	],
 	"dependencies": {
-		"append-type": "^1.0.2"
+		"inspect-with-kind": "^1.0.5"
 	},
 	"devDependencies": {
 		"@shinnn/eslint-config": "^6.8.9",
@@ -36,11 +36,7 @@
 		"tape": "^4.9.2"
 	},
 	"eslintConfig": {
-		"extends": "@shinnn",
-		"rules": {
-			"prefer-rest-params": "off",
-			"prefer-spread": "off"
-		}
+		"extends": "@shinnn"
 	},
 	"nyc": {
 		"extends": "nyc-config-common"

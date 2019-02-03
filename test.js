@@ -36,14 +36,20 @@ test('pauseFn()', async t => {
 
 	t.throws(
 		() => pauseFn(-0),
-		/TypeError: Expected a <Function>, but got a non-function value 0 \(number\)\./u,
+		/^TypeError: Expected a <Function>, but got a non-function value -0 \(number\)\./u,
 		'should throw an error when it takes a non-function value.'
 	);
 
 	t.throws(
 		() => pauseFn(),
-		/TypeError: Expected a <Function>, but got a non-function value undefined\./u,
+		/^RangeError: Expected 1 argument \(<Function>\), but got no arguments\./u,
 		'should throw an error when it takes no arguments.'
+	);
+
+	t.throws(
+		() => pauseFn(fn, fn),
+		/^RangeError: Expected 1 argument \(<Function>\), but got 2 arguments\./u,
+		'should throw an error when it takes too many arguments.'
 	);
 
 	t.end();
@@ -64,26 +70,32 @@ test('pauseFn.resume()', async t => {
 
 	t.throws(
 		() => pauseFn.resume(new Int8Array()),
-		/TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got a non-function value {2}\(object\)\./u,
+		/^TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got a non-function value Int8Array \[\]\./u,
 		'should throw an error when it takes a non-function value.'
 	);
 
 	t.throws(
 		() => pauseFn.resume(paused),
-		/TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got an already resume\(\)-ed one .*\./u,
+		/^TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got an already resume\(\)-ed one .*\./u,
 		'should throw an error when it takes a function that\'s already resumed.'
 	);
 
 	t.throws(
 		() => pauseFn.resume(t.fail),
-		/TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got .* which is not returned by `pauseFn\(\)`\./u,
+		/^TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got .* which is not returned by `pauseFn\(\)`\./u,
 		'should throw an error when it takes a function that hasn\'t been paused.'
 	);
 
 	t.throws(
 		() => pauseFn.resume(),
-		/TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got a non-function value undefined\./u,
+		/^RangeError: Expected 1 argument \(<Function>\), but got no arguments\./u,
 		'should throw an error when it takes no arguments.'
+	);
+
+	t.throws(
+		() => pauseFn.resume(t.fail, t.fail),
+		/^RangeError: Expected 1 argument \(<Function>\), but got 2 arguments\./u,
+		'should throw an error when it takes too many arguments.'
 	);
 
 	t.end();
