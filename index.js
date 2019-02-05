@@ -6,7 +6,7 @@ const inspectWithKind = require('inspect-with-kind');
 
 const ARG_ERROR = 'Expected 1 argument (<Function>)';
 const PAUSE_ERROR = 'Expected a <Function> returned by `pauseFn()`';
-const internalProperties = Symbol('internalProperties');
+const argsAndOriginalFns = new WeakMap();
 const resumed = new WeakSet();
 
 function validateArgumentLength(args) {
@@ -46,20 +46,17 @@ function pauseFn(...args) {
 	}
 
 	function paused(...fnArgs) {
-		if (paused[internalProperties]) {
-			paused[internalProperties].bufferedArgs.push(fnArgs);
+		if (argsAndOriginalFns.has(paused)) {
+			argsAndOriginalFns.get(paused).bufferedArgs.push(fnArgs);
 			return undefined;
 		}
 
 		return fn(...fnArgs);
 	}
 
-	Object.defineProperty(paused, internalProperties, {
-		configurable: true,
-		value: {
-			original: fn,
-			bufferedArgs: []
-		}
+	argsAndOriginalFns.set(paused, {
+		original: fn,
+		bufferedArgs: []
 	});
 	resumed.delete(paused);
 
@@ -94,16 +91,17 @@ Object.defineProperties(module.exports, {
 				throw error;
 			}
 
-			if (!paused[internalProperties]) {
+			if (!argsAndOriginalFns.has(paused)) {
 				const error = new TypeError(`${PAUSE_ERROR}, but got ${inspect(paused, {breakLength: Infinity})} which is not returned by \`pauseFn()\`.`);
 				error.code = 'ERR_INVALID_ARG_VALUE';
 
 				throw error;
 			}
 
-			const returnValues = paused[internalProperties].bufferedArgs.map(apply, paused[internalProperties].original);
+			const {original, bufferedArgs} = argsAndOriginalFns.get(paused);
+			const returnValues = bufferedArgs.map(apply, original);
 
-			delete paused[internalProperties];
+			argsAndOriginalFns.delete(paused);
 			resumed.add(paused);
 
 			return returnValues;
