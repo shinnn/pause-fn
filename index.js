@@ -45,6 +45,13 @@ function pauseFn(...args) {
 		throw error;
 	}
 
+	if (argsAndOriginalFns.has(fn)) {
+		const error = new Error(`Expected a <Function> which hasn't been paused by \`pauseFn()\`, but got an already paused one ${inspect(fn, {breakLength: Infinity})}.`);
+		error.code = 'ERR_INVALID_ARG_VALUE';
+
+		throw error;
+	}
+
 	function paused(...fnArgs) {
 		if (argsAndOriginalFns.has(paused)) {
 			argsAndOriginalFns.get(paused).bufferedArgs.push(fnArgs);

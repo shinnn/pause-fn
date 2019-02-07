@@ -41,6 +41,12 @@ test('pauseFn()', async t => {
 	);
 
 	t.throws(
+		() => pauseFn(paused),
+		/^Error: Expected a <Function> which hasn't been paused by `pauseFn\(\)`, but got an already paused one \[Function: paused\]\./u,
+		'should throw an error when it takes an already paused function.'
+	);
+
+	t.throws(
 		() => pauseFn(),
 		/^RangeError: Expected 1 argument \(<Function>\), but got no arguments\./u,
 		'should throw an error when it takes no arguments.'
