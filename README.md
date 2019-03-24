@@ -82,6 +82,10 @@ pauseFn.resume(pausedMathMax); //=> [0, Infinity]
 pausedMathMax(2, 3); //=> 3
 ```
 
+## Related
+
+* [pause-methods](https://github.com/shinnn/pause-methods) — pause/resume execution of the object's methods instead of a single function
+
 ## License
 
 [ISC License](./LICENSE) © 2019 Shinnosuke Watanabe
