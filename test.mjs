@@ -1,7 +1,5 @@
-'use strict';
-
-const pauseFn = require('.');
-const test = require('tape');
+import pauseFn from '.';
+import test from 'tape';
 
 let i = 0;
 
