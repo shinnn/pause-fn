@@ -1,7 +1,7 @@
 # pause-fn
 
 [![npm version](https://img.shields.io/npm/v/pause-fn.svg)](https://www.npmjs.com/package/pause-fn)
-[![Build Status](https://travis-ci.com/shinnn/pause-fn.svg?branch=master)](https://travis-ci.com/shinnn/pause-fn)
+[![GitHub Actions](https://action-badges.now.sh/shinnn/pause-fn)](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/results/shinnn/pause-fn)
 [![codecov](https://codecov.io/gh/shinnn/pause-fn/branch/master/graph/badge.svg)](https://codecov.io/gh/shinnn/pause-fn)
 
 A [Node.js](https://nodejs.org/) module to pause/resume execution of a function
@@ -88,4 +88,4 @@ pausedMathMax(2, 3); //=> 3
 
 ## License
 
-[ISC License](./LICENSE) © 2019 Shinnosuke Watanabe
+[ISC License](./LICENSE) © 2019 Watanabe Shinnosuke
