@@ -29,10 +29,10 @@
 		"inspect-with-kind": "^1.0.5"
 	},
 	"devDependencies": {
-		"@shinnn/eslint-config": "^6.10.3",
-		"coverage": "^0.3.1",
+		"@shinnn/eslint-config": "^6.10.4",
+		"coverage": "^0.4.1",
 		"eslint": "^5.16.0",
-		"tape": "^4.10.0"
+		"testit": "^3.1.0"
 	},
 	"eslintConfig": {
 		"extends": "@shinnn"

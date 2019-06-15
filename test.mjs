@@ -1,5 +1,7 @@
+import {strict as assert} from 'assert';
+
 import pauseFn from '.';
-import test from 'tape';
+import test from 'testit';
 
 let i = 0;
 
@@ -13,104 +15,93 @@ function fn(...args) {
 
 const paused = pauseFn(fn);
 
-test('pauseFn()', async t => {
-	t.equal(
-		paused(1),
-		undefined,
-		'should let the passed function return `undefined`.'
-	);
+test('puseFn()', () => {
+	test('let the passed function return `undefined`', () => {
+		assert.equal(paused(1), undefined);
+	});
 
-	t.equal(
-		i,
-		0,
-		'should let the passed function do nothing.'
-	);
+	test('let the passed function do nothing', () => {
+		assert.equal(i, 0);
+	});
 
-	t.equal(
-		paused(2, 3),
-		undefined,
-		'should support multiple arguments.'
-	);
+	test('support multiple arguments', () => {
+		assert.equal(paused(2, 3), undefined);
+	});
 
-	t.throws(
-		() => pauseFn(-0),
-		/^TypeError: Expected a <Function>, but got a non-function value -0 \(number\)\./u,
-		'should throw an error when it takes a non-function value.'
-	);
+	test('throw an error when it takes a non-function value', () => {
+		assert.throws(() => pauseFn(-0), {
+			name: 'TypeError',
+			message: 'Expected a <Function>, but got a non-function value -0 (number).'
+		});
+	});
 
-	t.throws(
-		() => pauseFn(paused),
-		/^Error: Expected a <Function> which hasn't been paused by `pauseFn\(\)`, but got an already paused one \[Function: paused\]\./u,
-		'should throw an error when it takes an already paused function.'
-	);
+	test('throw an error when it takes an already paused function', () => {
+		assert.throws(() => pauseFn(paused), {
+			name: 'Error',
+			message: 'Expected a <Function> which hasn\'t been paused by `pauseFn()`, but got an already paused one [Function: paused].'
+		});
+	});
 
-	t.throws(
-		() => pauseFn(),
-		/^RangeError: Expected 1 argument \(<Function>\), but got no arguments\./u,
-		'should throw an error when it takes no arguments.'
-	);
+	test('throw an error when it takes no arguments', () => {
+		assert.throws(() => pauseFn(), {
+			name: 'RangeError',
+			message: 'Expected 1 argument (<Function>), but got no arguments.'
+		});
+	});
 
-	t.throws(
-		() => pauseFn(fn, fn),
-		/^RangeError: Expected 1 argument \(<Function>\), but got 2 arguments\./u,
-		'should throw an error when it takes too many arguments.'
-	);
+	test('throw an error when it takes too many arguments', () => {
+		assert.throws(() => pauseFn(assert, assert), {
+			name: 'RangeError',
+			message: 'Expected 1 argument (<Function>), but got 2 arguments.'
+		});
+	});
 
-	t.end();
+	test('has an alias puseFn.pause()', () => {
+		assert.equal(pauseFn.pause, pauseFn);
+	});
 });
 
-test('pauseFn.resume()', async t => {
-	t.deepEqual(
-		pauseFn.resume(paused),
-		[1, 6],
-		'should return buffered values.'
-	);
+test('pauseFn.resume()', () => {
+	test('return buffered values', () => {
+		assert.deepEqual(pauseFn.resume(paused), [1, 6]);
+	});
 
-	t.equal(
-		paused(4),
-		10,
-		'should run buffered operations.'
-	);
+	test('restore the functionality of the previously paused function', () => {
+		assert.equal(paused(4), 10);
+	});
 
-	t.throws(
-		() => pauseFn.resume(new Int8Array()),
-		/^TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got a non-function value Int8Array \[\]\./u,
-		'should throw an error when it takes a non-function value.'
-	);
+	test('throw an error when it takes a non-function value', () => {
+		assert.throws(() => pauseFn.resume(new Int8Array()), {
+			name: 'TypeError',
+			message: 'Expected a <Function> returned by `pauseFn()`, but got a non-function value Int8Array [].'
+		});
+	});
 
-	t.throws(
-		() => pauseFn.resume(paused),
-		/^TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got an already resume\(\)-ed one .*\./u,
-		'should throw an error when it takes a function that\'s already resumed.'
-	);
+	test('throw an error when it takes a non-function value', () => {
+		assert.throws(() => pauseFn.resume(paused), {
+			name: 'TypeError',
+			message: /^Expected a <Function> returned by `pauseFn\(\)`, but got an already resume\(\)-ed one .*\./u
+		});
+	});
 
-	t.throws(
-		() => pauseFn.resume(t.fail),
-		/^TypeError: Expected a <Function> returned by `pauseFn\(\)`, but got .* which is not returned by `pauseFn\(\)`\./u,
-		'should throw an error when it takes a function that hasn\'t been paused.'
-	);
+	test('throw an error when it takes a function that hasn\'t been paused', () => {
+		assert.throws(() => pauseFn.resume(assert), {
+			name: 'TypeError',
+			message: /^Expected a <Function> returned by `pauseFn\(\)`, but got .* which is not returned by `pauseFn\(\)`\./u
+		});
+	});
 
-	t.throws(
-		() => pauseFn.resume(),
-		/^RangeError: Expected 1 argument \(<Function>\), but got no arguments\./u,
-		'should throw an error when it takes no arguments.'
-	);
+	test('throw an error when it takes no arguments', () => {
+		assert.throws(() => pauseFn.resume(), {
+			name: 'RangeError',
+			message: 'Expected 1 argument (<Function>), but got no arguments.'
+		});
+	});
 
-	t.throws(
-		() => pauseFn.resume(t.fail, t.fail),
-		/^RangeError: Expected 1 argument \(<Function>\), but got 2 arguments\./u,
-		'should throw an error when it takes too many arguments.'
-	);
-
-	t.end();
-});
-
-test('pauseFn.pause()', async t => {
-	t.equal(
-		pauseFn.pause,
-		pauseFn,
-		'should be an alias of `parseFn()`.'
-	);
-
-	t.end();
+	test('throw an error when it takes too many arguments', () => {
+		assert.throws(() => pauseFn.resume(assert, assert), {
+			name: 'RangeError',
+			message: 'Expected 1 argument (<Function>), but got 2 arguments.'
+		});
+	});
 });
